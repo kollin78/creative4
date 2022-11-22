@@ -57,22 +57,22 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <div class="flex-box">
+    <div class="App">
+      <div class="lil-box">
         {error}
         <h1>Create a Memorable Quote</h1>
         <form onSubmit={addQuote}>
           <div class="input">
             <label class="label">
-              Quote: <input type="text" value={quote} onChange={e => setQuote(e.target.value)} />
+              <b>Quote: </b><input class="in-box" type="text" value={quote} onChange={e => setQuote(e.target.value)} />
             </label>
           </div>
           <div class="input">
             <label class="label">
-              Author: <input value={author} onChange={e=>setAuthor(e.target.value)}></input>
+              <b>Author: </b><input class="in-box" value={author} onChange={e=>setAuthor(e.target.value)}></input>
             </label>
           </div>
-          <input type="submit" value="Submit" />
+          <input class="in-button" type="submit" value="Submit" />
         </form>
         <h1>Quotes</h1>
         {quotes.map( quote => (
