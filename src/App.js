@@ -8,6 +8,7 @@ function App() {
   const [error, setError] = useState("");
   const [quote, setQuote] = useState("");
   const [author, setAuthor] = useState("");
+  const [isShown, setIsShown] = useState(false);
 
   const fetchQuotes = async () => {
     try {
@@ -26,6 +27,10 @@ function App() {
     catch (error) {
       setError("error adding a quote: " + error);
     }
+  }
+  
+  const handleClick = e => {
+    setIsShown(current => !current);
   }
 
   // fetch ticket data
@@ -60,30 +65,44 @@ function App() {
     <div class="App">
       <div class="lil-box">
         {error}
-        <h1>Create a Memorable Quote</h1>
-        <form onSubmit={addQuote}>
-          <div class="input">
-            <label class="label">
-              <b>Quote: </b><input class="in-box" type="text" value={quote} onChange={e => setQuote(e.target.value)} />
-            </label>
-          </div>
-          <div class="input">
-            <label class="label">
-              <b>Author: </b><input class="in-box" value={author} onChange={e=>setAuthor(e.target.value)}></input>
-            </label>
-          </div>
-          <input class="in-button" type="submit" value="Submit" />
-        </form>
+        {!isShown && (
+          <>
+          <button class="button" onClick={e => handleClick()}>
+          View
+          </button>
+          <h1>Create a Memorable Quote</h1>
+          <form onSubmit={addQuote}>
+            <div class="input">
+              <label class="label">
+                <b>Quote: </b><input class="in-box" type="text" value={quote} onChange={e => setQuote(e.target.value)} />
+              </label>
+            </div>
+            <div class="input">
+              <label class="label">
+                <b>Author: </b><input class="in-box" value={author} onChange={e=>setAuthor(e.target.value)}></input>
+              </label>
+            </div>
+            <input class="in-button" type="submit" value="Submit" />
+          </form>
+        </>
+      )}
+      {isShown && (
+      <>
+        <button class="button" onClick={e => handleClick()}>
+          Create
+        </button>
         <h1>Quotes</h1>
         {quotes.map( quote => (
-          <div key={quote.author} className="ticket">
-            <div className="problem">
-              <p>"{quote.quote}"</p>
-              <p><i>-- {quote.author}</i></p>
+            <div key={quote.author} className="ticket">
+              <div className="problem">
+                <p>"{quote.quote}"</p>
+                <p><i>-- {quote.author}</i></p>
+              </div>
+              <button onClick={e => deleteQuote(quote)}>Delete</button>
             </div>
-            <button onClick={e => deleteQuote(quote)}>Delete</button>
-          </div>
-      ))}     
+          ))}
+      </>
+      )}
       </div>
     </div>
   );
